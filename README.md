@@ -6,7 +6,11 @@ TinyCheck allows you to easily capture network communications from a smartphone 
 
 ![Architecture](/assets/network-home.png)
 
-In order to make it working, you need a computer with a Debian-like operating system and two Wi-Fi interfaces. The best choice is to use a [Raspberry Pi (3+)](https://www.raspberrypi.org) with a Wi-Fi dongle and a small touch screen. This tiny configuration (for less than \$50) allows you to tap any Wi-Fi device, anywhere.
+In order to make it working, you need a computer with a Raspberry Pi OS (or other Debian-like operating system - without warranty of working) and two Wi-Fi interfaces. The best choice is to use a [Raspberry Pi (3+)](https://www.raspberrypi.org) with a Wi-Fi dongle accepting AP mode and a small touch screen. This tiny configuration (for less than \$50) allows you to tap any Wi-Fi device, anywhere.
+
+*If you need more documentation about the internals, don't hesitate to take a look at the [TinyCheck Wiki](https://github.com/KasperskyLab/TinyCheck/wiki).*
+
+*If you have any question about the projet. Want to contribute or just send your feedbacks, don't hesitate to contact us at tinycheck[@]kaspersky[.]com.*
 
 ### History
 
@@ -37,7 +41,7 @@ TinyCheck can be used in several ways by individuals and entities:
 6. **Analyze the capture** <br/>
    Analyze the captured communication, enjoy (or not).
 7. **Save the capture** <br/>
-   Save the capture on an USB key or by direct download.
+   Save the capture and the PDF report on an USB key or by direct download.
 
 ### Architecture
 
@@ -77,13 +81,13 @@ Once installed, the operating system is going to reboot.
 
 ### Meet the frontend
 
-The frontend - which can be accessed from `http://tinycheck.local` - is a kind of tunnel which help the user throughout the process of network capture and reporting. It allows the user to setup a Wi-Fi connection to an existing Wi-Fi network, create an ephemeral Wi-Fi network, capture the communications and show a report to the user... in less than one minute, 5 clicks and without any technical knowledge. 
+The frontend - which can be accessed from `http://tinycheck.local` or `http://127.0.0.1` if you are running it locally - is a kind of tunnel which help the user throughout the process of network capture and reporting. It allows the user to setup a Wi-Fi connection to an existing Wi-Fi network, create an ephemeral Wi-Fi network, capture the communications and show a report to the user... in less than one minute, 5 clicks and without any technical knowledge. 
 
 ![Frontend](/assets/frontend.png)
 
 ### Meet the backend
 
-Once installed, you can connect yourself to the TinyCheck backend by browsing the URL `https://tinycheck.local` and accepting the SSL self-signed certificate. 
+Once installed, you can connect yourself to the TinyCheck backend by browsing the URL `https://tinycheck.local` or  `http://127.0.0.1` if you are running it locally and accepting the SSL self-signed certificate. 
 
 ![Backend](/assets/backend.png)
 
@@ -96,7 +100,7 @@ The backend allows you to edit the configuration of TinyCheck, add extended IOCs
 - Certificates sha1
 - Nameservers
 - FreeDNS
-- Fancy TLDs
+- Fancy TLDs (eg. xyz, .top etc.)
 
 ### Meet the analysis engine
 
@@ -119,13 +123,13 @@ On the [Suricata](https://suricata-ids.org/) part, the network capture is analys
 - Device name exfiltred in clear-text;
 - Access point SSID exfiltred in clear-text;
 
-### Watchers?
+### Watchers concept
 
 In order to keep IOCs and whitelist updated constantly, TinyCheck integrates something called "watchers". It is a very simple service with few lines of Python which grabs new formated IOCs or whitelist elements from public URLs. As of today, TinyCheck integrates two urls, one for the whitelist and one for the IOCs (The formated files are present in the assets folder). 
 
 If you have seen something very suspicious and/or needs to be investigated/integrated in one of these two lists, don't hesitate to ping us. You can also do you own watcher. Remember, sharing is caring. 
 
-### Q&As
+### Questions & Answers
 
 **Your project seem very cool, does it send data to Kaspersky or any telemetry server?**<br /><br />
 No, at all. You can look to the sources, the only data sent by TinyCheck is an HTTP GET request to a website that you can specify in the config, as well as the watchers URLs. Kaspersky don't - and will not - receive any telemetry from your TinyCheck device.<br /><br />
@@ -136,14 +140,16 @@ Yes, if the demand is felt by NGOs (contact us!). Is it possible to develop this
 
 ### Possible updates for next releases
 
-- Centralized server for IOC/whitelist management (aka. Remote Analysis).
-- Implement Ethernet use.
-- PDF reports.
-- Possibility to add watchers from the backend interface.
-- Encryption of ZIPed reports.
-- Better frontend GUI/JS (use of websockets / better animations).
+- Implement Ethernet / Non internet use.
 - More OpSec (TOR integration, Local IP randomization etc.)
-- 3d template for kiosks ?
+- Possibility to add watchers from the backend interface.
+- Centralized server for IOC/whitelist management (aka. Remote Analysis).
+- Better frontend GUI/JS (use of websockets / better animations).
+- Encryption of ZIPed reports.
+
+### Contact
+
+If you have any question about the projet. Want to contribute or just send your feedbacks/success stories, don't hesitate to contact us at tinycheck[@]kaspersky[.]com. 
 
 ### Special thanks
 

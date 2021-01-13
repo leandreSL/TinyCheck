@@ -38,6 +38,9 @@ backend:
 # you can change them via the backend. 
 #
 frontend:
+  shutdown_option: false
+  reboot_option: false
+  quit_option: true
   download_links: false
   hide_mouse: true
   kiosk_mode: true
@@ -69,6 +72,6 @@ network:
 watchers:
   iocs:
   - https://raw.githubusercontent.com/KasperskyLab/TinyCheck/main/assets/iocs.json
-  - https://github.com/Te-k/stalkerware-indicators/raw/master/indicators-for-tinycheck.json
+  - https://raw.githubusercontent.com/Te-k/stalkerware-indicators/master/indicators-for-tinycheck.json
   whitelists:
   - https://raw.githubusercontent.com/KasperskyLab/TinyCheck/main/assets/whitelist.json

@@ -27,12 +27,11 @@
         </div>
         <div v-else>
             <p>
-                <strong>Unfortunately, we got some issues.</strong>
+                <strong>Unfortunately, we got some issues <br />during the AP creation.</strong>
                 <br /><br />
-                Please verify that you've two Wifi interfaces on your device<br />
-                and restart it by clicking on the button below.<br /> 
+                Please verify that you've two WiFi interfaces on your device<br /> and try again by restarting it.<br /><br /> 
             </p>
-            <button class="btn" v-on:click="reboot()">Reboot the device</button>
+            <button v-if="reboot_option" class="btn" v-on:click="reboot()">Restart the device</button>
         </div>
     </div>
     
@@ -53,12 +52,14 @@ export default {
             capture_token: false,
             capture_start: false,
             interval: false,
-            error: false
+            error: false,
+            reboot_option: false,
+            attempts: 3
         }
     },
     methods: {
         generate_ap: function() {
-            clearInterval(this.interval)
+            clearInterval(this.interval);
             this.ssid_name = false
             axios.get(`/api/network/ap/start`, { timeout: 30000 })
                 .then(response => (this.show_ap(response.data)))
@@ -70,7 +71,12 @@ export default {
                 this.ssid_qr = data.qrcode
                 this.start_capture() // Start the capture before client connect.
             } else {
-                this.error = true
+                if(this.attempts != 0){
+                    setTimeout(function () { this.generate_ap() }.bind(this), 10000)
+                    this.attempts -= 1;
+                } else {
+                    this.error = true
+                }
             }
         },
         start_capture: function() {
@@ -109,9 +115,19 @@ export default {
                     }
                 });
             }
-        }
+        },
+        load_config: function() {
+            axios.get(`/api/misc/config`, { timeout: 60000 })
+                .then(response => {
+                    this.reboot_option = response.data.reboot_option
+                })
+                .catch(error => {
+                    console.log(error)
+            });
+        },
     },
     created: function() {
+        this.load_config()
         this.generate_ap();
     }
 }
